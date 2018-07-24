@@ -1,0 +1,52 @@
+import java.util.Scanner;
+import java.util.*;
+class GD2
+{
+    ArrayList<Integer> bi=new ArrayList<Integer>();
+    ArrayList<Integer> bj=new ArrayList<Integer>();
+    long ans;
+    int vi,vj;
+    public static void main(String[] args)
+    {
+        System.out.println("Enter the Order of Matrix");
+        Scanner scan=new Scanner(System.in);
+        int order=scan.nextInt();
+        System.out.println("Enter the Elements Row by Row");
+        int[][] arr=new int[order][order];
+        for(int i=0;i<order;i++)
+        for(int j=0;j<order;j++)
+        arr[i][j]=scan.nextInt();
+        GD2 gd=new GD2();
+        int i=0,j=0;
+        long answer;
+        answer=gd.deter(i,j,order,arr);
+        System.out.println("Determinant is "+answer);
+    }
+    long deter(int i,int j,int n,int[][] arr)
+    {
+        if(n==1)
+        return arr[i][j];
+        int sign=-1,jLast=j;
+        ans=0;
+        for(int m=0;m<n;m++)
+        {
+            sign*=-1;
+            bi.add(i);
+            while(bj.contains(jLast))
+            jLast++;
+            bj.add(jLast);
+            vi=0;
+            while(bi.contains(vi))
+            vi++;
+            vj=0;
+            while(bj.contains(vj))
+            vj++;
+            ans+=(sign)*arr[i][jLast]*deter(vi,vj,n-1,arr);
+            bi.remove((Integer)i);
+            bj.remove((Integer)(jLast));
+            jLast++;
+        }
+        return ans;
+    }
+}
+       
